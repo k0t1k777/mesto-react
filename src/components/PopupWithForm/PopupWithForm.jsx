@@ -12,8 +12,7 @@ export default function PopupWithForm({
         <button type="button" className="popup__close" onClick={onClose} />
         <form
           className="popup__form"
-          name="popapForm_editProfile"
-          noValidate=""
+          name="editProfile"
         >
           <h2 className="popup__title">{title}</h2>
           {children}
@@ -27,4 +26,4 @@ export default function PopupWithForm({
       </div>
     </section>
   );
-};
+}

@@ -3,21 +3,21 @@ class Api {
     this._url = options.baseUrl;
     this._headers = options.headers;
     this._authorization = options.headers.authorization;
-    this._res = (res) => (res.ok ? res.json() : Promise.reject);
+    this._checkResponse = (res) => (res.ok ? res.json() : Promise.reject);
   }
   getInfoUser() {
     return fetch(`${this._url}/users/me`, {
       headers: {
         authorization: this._authorization,
       },
-    }).then(this._res);
+    }).then(this._checkResponse);
   }
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       headers: {
         authorization: this._authorization,
       },
-    }).then(this._res);
+    }).then(this._checkResponse);
   }
   changeProfile(data) {
     return fetch(`${this._url}/users/me`, {
@@ -27,7 +27,7 @@ class Api {
         name: data.userName,
         about: data.userJob,
       }),
-    }).then(this._res);
+    }).then(this._checkResponse);
   }
   addNewCard(cardData) {
     return fetch(`${this._url}/cards`, {
@@ -37,7 +37,7 @@ class Api {
         name: cardData.title,
         link: cardData.link,
       }),
-    }).then(this._res);
+    }).then(this._checkResponse);
   }
   addLikes(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
@@ -45,7 +45,7 @@ class Api {
       headers: {
         authorization: this._authorization,
       },
-    }).then(this._res);
+    }).then(this._checkResponse);
   }
   removeLikes(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
@@ -53,7 +53,7 @@ class Api {
       headers: {
         authorization: this._authorization,
       },
-    }).then(this._res);
+    }).then(this._checkResponse);
   }
   changeAvatar(pic) {
     return fetch(`${this._url}/users/me/avatar`, {
@@ -62,7 +62,7 @@ class Api {
       body: JSON.stringify({
         avatar: pic.avatar,
       }),
-    }).then(this._res);
+    }).then(this._checkResponse);
   }
   removeCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
@@ -70,7 +70,7 @@ class Api {
       headers: {
         authorization: this._authorization,
       },
-    }).then(this._res);
+    }).then(this._checkResponse);
   }
 }
 

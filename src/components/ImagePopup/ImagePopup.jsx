@@ -10,10 +10,10 @@ export default function ImagePopup({ card, onClose }) {
             className="popupForImage__image"
           />
           <figcaption className="popupForImage__figcaption">
-          {card ? card.name : ""}
+            {card ? card.name : ""}
           </figcaption>
         </figure>
       </div>
     </section>
   );
-};
+}

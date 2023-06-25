@@ -22,7 +22,8 @@ export default function Main({
         infoCard.forEach((card) => (card.myid = infoUser._id));
         setCards(infoCard);
       }
-    );
+    )
+    .catch((error) => console.error(`Ошибка ${error}`))
   }, []);
 
   return (
@@ -53,11 +54,9 @@ export default function Main({
         />
       </section>
       <section className="elements">
-        {cards.map((data) => {
-          return (
-            <div className="elements__element" key={data._id}>
-              <Card card={data} onCardClick={onCardClick}></Card>
-            </div>
+      {cards.map((data) => {
+            return (
+              <Card key={data._id} card={data} onCardClick={onCardClick}></Card>
           );
         })}
       </section>
