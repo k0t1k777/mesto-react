@@ -1,4 +1,4 @@
-# 	  git	Проект: MESTO на React
+#   git	Проект: MESTO на React
 
 ### О проекте:
 
