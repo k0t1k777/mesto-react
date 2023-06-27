@@ -1,7 +1,7 @@
-export default function Card({ card, onCardClick }) {
+export default function Card({ card, onCardClick, onCardDelete }) {
   return (
     <div className="elements__element">
-      <button className="elements__element_urn" />
+      <button className="elements__element_urn" onClick={onCardDelete}/>
       <img
         src={card.link}
         className="elements__image"
@@ -12,7 +12,6 @@ export default function Card({ card, onCardClick }) {
         <h2 className="elements__name">{card.name}</h2>
         <div className="elements__forLikes">
           <button type="button" className="elements__button" />
-          {/* <span className="elements__count">0</span> */}
           <span className="elements__count">{card.likes.length}</span>
         </div>
       </div>

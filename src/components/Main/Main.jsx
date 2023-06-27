@@ -7,6 +7,7 @@ export default function Main({
   onAddPlace,
   onEditAvatar,
   onCardClick,
+  onCardDelete,
 }) {
   const [userName, setUserName] = useState("");
   const [userDescription, setUserDescription] = useState("");
@@ -56,7 +57,7 @@ export default function Main({
       <section className="elements">
       {cards.map((data) => {
             return (
-              <Card key={data._id} card={data} onCardClick={onCardClick}></Card>
+              <Card key={data._id} card={data} onCardClick={onCardClick} onCardDelete={onCardDelete}></Card>
           );
         })}
       </section>

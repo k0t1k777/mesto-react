@@ -10,6 +10,8 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [isDeletePopup, setIsDeletePopup] = useState(false);
+  
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -28,10 +30,15 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard(null);
+    setIsDeletePopup(false);
   }
 
   function handleCardClick(card) {
     setSelectedCard(card);
+  }
+
+  function handleDeleteClick () {
+    setIsDeletePopup(true);
   }
 
   return (
@@ -43,13 +50,14 @@ function App() {
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
         onCardClick={handleCardClick}
+        onCardDelete ={handleDeleteClick }
       />
 
       <Footer />
 
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
-      <PopupWithForm
+       <PopupWithForm
         name="popupEditProfile"
         title="Редактировать профиль"
         nameOfButton="Сохранить"
@@ -121,6 +129,7 @@ function App() {
         name="popupConfirm"
         title="Вы уверены?"
         nameOfButton="Да"
+        isOpen={isDeletePopup}
         onClose={closeAllPopups}
       ></PopupWithForm>
 
