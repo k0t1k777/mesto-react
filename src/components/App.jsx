@@ -3,7 +3,10 @@ import Main from "./Main/Main.jsx";
 import PopupWithForm from "./PopupWithForm/PopupWithForm.jsx";
 import ImagePopup from "./ImagePopup/ImagePopup.jsx";
 import Footer from "./Footer/Footer.jsx";
-import { useState } from "react";
+import api from "../utils/api.js";
+import { useEffect, useState } from "react";
+import CurrentUserContext from "../contexts/CurrentUserContext.js";
+
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -11,7 +14,12 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [isDeletePopup, setIsDeletePopup] = useState(false);
-  
+  // const [userName, setUserName] = useState ({});
+// Данные пользователя
+  const [currentUser, setCurrentUser] = useState ({});
+// Данные карточек 
+  const [cards, setCards] = useState([]);
+
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -41,8 +49,20 @@ function App() {
     setIsDeletePopup(true);
   }
 
+    useEffect(() => {
+      Promise.all([api.getInfoUser(), api.getInitialCards()]).then(
+        ([infoUser, infoCard]) => {
+          setCurrentUser(infoUser)
+          setCards(infoCard);
+        }
+      )
+      .catch((error) => console.error(`Ошибка ${error}`))
+    }, []);
+
+  
   return (
-    <div className="page__content">
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page__content">
       <Header />
 
       <Main
@@ -51,6 +71,7 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
         onCardClick={handleCardClick}
         onCardDelete ={handleDeleteClick }
+        cards={cards}
       />
 
       <Footer />
@@ -153,6 +174,7 @@ function App() {
         </div>
       </PopupWithForm>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 

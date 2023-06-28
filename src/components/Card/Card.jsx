@@ -1,6 +1,12 @@
 export default function Card({ card, onCardClick, onCardDelete }) {
   return (
     <div className="elements__element">
+
+      {/* Определяем, являемся ли мы владельцем текущей карточки */}
+      {/* {card.myid = card.owner._id === currentUser._id} */}
+     {/* Далее в разметке используем переменную для условного рендеринга */}
+        {/* {card.myid && <button className='elements__element_urn' onClick={onCardDelete} />}  */}
+
       <button className="elements__element_urn" onClick={onCardDelete}/>
       <img
         src={card.link}

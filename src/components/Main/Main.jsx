@@ -1,31 +1,13 @@
-import { useEffect, useState } from "react";
-import api from "../../utils/api";
 import Card from "../Card/Card";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { useContext } from "react";
 
-export default function Main({
-  onEditProfile,
-  onAddPlace,
-  onEditAvatar,
-  onCardClick,
-  onCardDelete,
-}) {
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
-  const [cards, setCards] = useState([]);
+export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardDelete, cards }) {
+  const currentUser = useContext(CurrentUserContext)
 
-  useEffect(() => {
-    Promise.all([api.getInfoUser(), api.getInitialCards()]).then(
-      ([infoUser, infoCard]) => {
-        setUserAvatar(infoUser.avatar);
-        setUserName(infoUser.name);
-        setUserDescription(infoUser.about);
-        infoCard.forEach((card) => (card.myid = infoUser._id));
-        setCards(infoCard);
-      }
-    )
-    .catch((error) => console.error(`Ошибка ${error}`))
-  }, []);
+  // const [userName, setUserName] = useState("");
+  // const [userDescription, setUserDescription] = useState("");
+  // const [userAvatar, setUserAvatar] = useState("");
 
   return (
     <main className="container">
@@ -35,18 +17,18 @@ export default function Main({
           type="button"
           onClick={onEditAvatar}
         >
-          <img src={userAvatar} className="profile__avatar" alt="Аватарка" />
+          <img src={currentUser.avatar} className="profile__avatar" alt="Аватарка" />
         </button>
         <div className="profile__info">
           <div className="profile__wrapper">
-            <h1 className="section-title">{userName}</h1>
+            <h1 className="section-title">{currentUser.name}</h1>
             <button
               type="button"
               className="profile__edit-button"
               onClick={onEditProfile}
             />
           </div>
-          <p className="section-subtitle">{userDescription}</p>
+          <p className="section-subtitle">{currentUser.about}</p>
         </div>
         <button
           type="button"
@@ -64,3 +46,4 @@ export default function Main({
     </main>
   );
 }
+
