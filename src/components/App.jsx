@@ -6,6 +6,7 @@ import Footer from "./Footer/Footer.jsx";
 import api from "../utils/api.js";
 import { useEffect, useState } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
+import EditProfilePopup from "./EditProfilePopup/EditProfilePopup.jsx";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -13,6 +14,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [isDeletePopup, setIsDeletePopup] = useState(false);
+  const [deleteCard, setDeleteCard] = useState("");
+
   // Данные пользователя
   const [currentUser, setCurrentUser] = useState({});
   // Данные карточек
@@ -42,11 +45,27 @@ function App() {
     setSelectedCard(card);
   }
 
-  function handleDeleteClick() {
+  function handleDeleteClick(cardId) {
     setIsDeletePopup(true);
+    setDeleteCard(cardId);
   }
 
-// Лайки
+  function handleCardDeleteSubmit(event) {
+    event.preventDefault();
+    api
+      .removeCard(deleteCard)
+      .then(() => {
+        setCards(
+          cards.filter((item) => {
+            return item._id !== deleteCard;
+          })
+        );
+        closeAllPopups();
+      })
+      .catch((error) => console.error(`Ошибка ${error}`));
+  }
+
+  // Лайки
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -60,7 +79,7 @@ function App() {
       })
       .catch((error) => console.error(`Ошибка ${error}`));
   }
-  
+
   useEffect(() => {
     Promise.all([api.getInfoUser(), api.getInitialCards()])
       .then(([infoUser, infoCard]) => {
@@ -89,40 +108,7 @@ function App() {
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
-        <PopupWithForm
-          name="popupEditProfile"
-          title="Редактировать профиль"
-          nameOfButton="Сохранить"
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-        >
-          <div className="popup__wrapper">
-            <input
-              name="userName"
-              className="popup__input popup__input_type_name"
-              id="popup__name"
-              type="text"
-              placeholder="Ваше имя"
-              minLength={2}
-              maxLength={40}
-              required=""
-            />
-            <span className="popup__error" id="popup__name-error" />
-          </div>
-          <div className="popup__wrapper">
-            <input
-              name="userJob"
-              className="popup__input popup__input_type_job"
-              id="popup__job"
-              type="text"
-              placeholder="Чем занимаетесь"
-              minLength={2}
-              maxLength={200}
-              required=""
-            />
-            <span className="popup__error" id="popup__job-error" />
-          </div>
-        </PopupWithForm>
+        <EditProfilePopup />
 
         <PopupWithForm
           name="popupAddPicture"
@@ -163,6 +149,7 @@ function App() {
           nameOfButton="Да"
           isOpen={isDeletePopup}
           onClose={closeAllPopups}
+          onCardDeletSubmit={handleCardDeleteSubmit}
         ></PopupWithForm>
 
         <PopupWithForm

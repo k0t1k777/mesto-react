@@ -5,6 +5,7 @@ export default function PopupWithForm({
   children,
   isOpen,
   onClose,
+  onCardDeletSubmit,
 }) {
   return (
     <section className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}>
@@ -12,6 +13,7 @@ export default function PopupWithForm({
         <button type="button" className="popup__close" onClick={onClose} />
         <form
           className="popup__form"
+          onSubmit={onCardDeletSubmit}
           name="editProfile"
         >
           <h2 className="popup__title">{title}</h2>

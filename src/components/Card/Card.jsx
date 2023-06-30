@@ -18,7 +18,7 @@ export default function Card({ card, onCardClick, onCardDelete, onCardLike }) {
   return (
     <div className="elements__element">
       {currentUser._id === card.owner._id && (
-        <button className="elements__element_urn" onClick={onCardDelete} />
+        <button className="elements__element_urn" onClick={() => onCardDelete(card._id)} />
       )}
       <img
         src={card.link}
