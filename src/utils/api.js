@@ -55,6 +55,12 @@ class Api {
       },
     }).then(this._checkResponse);
   }
+  changeLikeCardStatus(cardId, isLiked){
+    if(isLiked){
+      return this.addLikes(cardId);
+    }
+    return this.removeLikes(cardId);
+  }
   changeAvatar(pic) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",

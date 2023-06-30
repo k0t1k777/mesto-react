@@ -1,13 +1,25 @@
-export default function Card({ card, onCardClick, onCardDelete }) {
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { useContext } from "react";
+
+export default function Card({ card, onCardClick, onCardDelete, onCardLike }) {
+  const currentUser = useContext(CurrentUserContext);
+  // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
+  const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  // Создаём переменную, которую после зададим в `className` для кнопки лайка
+  const cardLikeButtonClassName = `elements__button ${
+    isLiked && "elements__button_active"
+  }`;
+  function handleLikeClick() {
+    onCardLike(card);
+  }
+  // function handleDeleteCardClick() {
+  //   onCardDelet(card);
+  // };
   return (
     <div className="elements__element">
-
-      {/* Определяем, являемся ли мы владельцем текущей карточки */}
-      {/* {card.myid = card.owner._id === currentUser._id} */}
-     {/* Далее в разметке используем переменную для условного рендеринга */}
-        {/* {card.myid && <button className='elements__element_urn' onClick={onCardDelete} />}  */}
-
-      <button className="elements__element_urn" onClick={onCardDelete}/>
+      {currentUser._id === card.owner._id && (
+        <button className="elements__element_urn" onClick={onCardDelete} />
+      )}
       <img
         src={card.link}
         className="elements__image"
@@ -17,7 +29,11 @@ export default function Card({ card, onCardClick, onCardDelete }) {
       <div className="elements__wrapper">
         <h2 className="elements__name">{card.name}</h2>
         <div className="elements__forLikes">
-          <button type="button" className="elements__button" />
+          <button
+            type="button"
+            className={cardLikeButtonClassName}
+            onClick={handleLikeClick}
+          />
           <span className="elements__count">{card.likes.length}</span>
         </div>
       </div>
