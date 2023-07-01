@@ -5,15 +5,18 @@ export default function PopupWithForm({
   children,
   isOpen,
   onClose,
-  onCardDeletSubmit,
+  onSubmit
 }) {
+
+// console.log(onSubmit)
+
   return (
     <section className={`popup popup_type_${name} ${isOpen && "popup_opened"}`}>
       <div className="popup__container">
         <button type="button" className="popup__close" onClick={onClose} />
         <form
           className="popup__form"
-          onSubmit={onCardDeletSubmit}
+          onSubmit={onSubmit}
           name="editProfile"
         >
           <h2 className="popup__title">{title}</h2>

@@ -80,6 +80,15 @@ function App() {
       .catch((error) => console.error(`Ошибка ${error}`));
   }
 
+  function handleUpdateUser(data) {
+    api.changeProfile(data)
+      .then((infoUser) => {
+        setCurrentUser(infoUser);
+        closeAllPopups();
+      })
+      .catch((error) => console.error(`Ошибка ${error}`));
+  }
+
   useEffect(() => {
     Promise.all([api.getInfoUser(), api.getInitialCards()])
       .then(([infoUser, infoCard]) => {
@@ -108,7 +117,11 @@ function App() {
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
-        <EditProfilePopup />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
 
         <PopupWithForm
           name="popupAddPicture"
