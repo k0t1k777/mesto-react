@@ -1,7 +1,7 @@
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { useContext } from "react";
 
-export default function Card({ card, onCardClick, onCardDelete, onCardLike }) {
+export default function Card({ card, onCardClick, onCardDeleteSubmit, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
   const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -12,13 +12,10 @@ export default function Card({ card, onCardClick, onCardDelete, onCardLike }) {
   function handleLikeClick() {
     onCardLike(card);
   }
-  // function handleDeleteCardClick() {
-  //   onCardDelet(card);
-  // };
   return (
     <div className="elements__element">
       {currentUser._id === card.owner._id && (
-        <button className="elements__element_urn" onClick={() => onCardDelete(card._id)} />
+        <button className="elements__element_urn" onClick={() => onCardDeleteSubmit(card._id)} />
       )}
       <img
         src={card.link}

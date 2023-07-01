@@ -2,7 +2,7 @@ import Card from "../Card/Card";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { useContext } from "react";
 
-export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardDelete, onCardLike, cards }) {
+export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardDeleteSubmit, onCardLike, cards }) {
   const currentUser = useContext(CurrentUserContext)
 
   // const [userName, setUserName] = useState("");
@@ -39,7 +39,7 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
       <section className="elements">
       {cards.map((data) => {
             return (
-              <Card key={data._id} card={data} onCardLike={onCardLike} onCardClick={onCardClick} onCardDelete={onCardDelete}></Card>
+              <Card key={data._id} card={data} onCardLike={onCardLike} onCardClick={onCardClick} onCardDeleteSubmit={onCardDeleteSubmit}></Card>
           );
         })}
       </section>
