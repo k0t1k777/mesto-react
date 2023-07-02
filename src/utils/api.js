@@ -3,7 +3,7 @@ class Api {
     this._url = options.baseUrl;
     this._headers = options.headers;
     this._authorization = options.headers.authorization;
-    this._checkResponse = (res) => (res.ok ? res.json() : Promise.reject);
+    this._checkResponse = (res) => (res.ok ? res.json() : Promise.reject());
   }
   getInfoUser() {
     return fetch(`${this._url}/users/me`, {

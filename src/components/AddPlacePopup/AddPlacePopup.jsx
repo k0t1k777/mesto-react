@@ -37,6 +37,7 @@ export default function AddPlacePopup({ onAddPlace, isOpen, onClose }) {
           minLength={2}
           maxLength={30}
           required=""
+          value={name || ''}
           onChange={(event) => setName(event.target.value)}
         />
         <span className="popup__error" id="title-error" />
@@ -49,6 +50,7 @@ export default function AddPlacePopup({ onAddPlace, isOpen, onClose }) {
           type="url"
           placeholder="Ссылка на картинку"
           required=""
+          value={link || ''}
           onChange={(event) => setLink(event.target.value)}
         />
         <span className="popup__error" id="link-error" />

@@ -38,6 +38,7 @@ export default function EditProfilePopup({ onUpdateUser, isOpen, onClose }) {
           minLength={2}
           maxLength={40}
           required=""
+          value={name || ''}
           onChange={(event) => setName(event.target.value)}
         />
         <span className="popup__error" id="popup__name-error" />
@@ -52,6 +53,7 @@ export default function EditProfilePopup({ onUpdateUser, isOpen, onClose }) {
           minLength={2}
           maxLength={200}
           required=""
+          value={job || ''}
           onChange={(event) => setJob(event.target.value)}
         />
         <span className="popup__error" id="popup__job-error" />

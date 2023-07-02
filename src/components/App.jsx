@@ -15,8 +15,8 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [isDeletePopup, setIsDeletePopup] = useState(false);
-  const [deleteCard, setDeleteCard] = useState("");
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [deleteCardID, setDeleteCardID] = useState("");
 
   // Данные пользователя
   const [currentUser, setCurrentUser] = useState({});
@@ -40,7 +40,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard(null);
-    setIsDeletePopup(false);
+    setIsDeletePopupOpen(false);
   }
 
   function handleCardClick(card) {
@@ -48,18 +48,18 @@ function App() {
   }
 
   function handleDeleteClick(cardId) {
-    setIsDeletePopup(true);
-    setDeleteCard(cardId);
+    setIsDeletePopupOpen(true);
+    setDeleteCardID(cardId);
   }
 
   function handleCardDeleteSubmit(event) {
     event.preventDefault();
     api
-      .removeCard(deleteCard)
+      .removeCard(deleteCardID)
       .then(() => {
         setCards(
           cards.filter((item) => {
-            return item._id !== deleteCard;
+            return item._id !== deleteCardID;
           })
         );
         closeAllPopups();
@@ -150,22 +150,22 @@ function App() {
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
-        ></AddPlacePopup>
+        />
 
         <PopupWithForm
           name="popupConfirm"
           title="Вы уверены?"
           nameOfButton="Да"
-          isOpen={isDeletePopup}
+          isOpen={isDeletePopupOpen}
           onClose={closeAllPopups}
           onSubmit={handleCardDeleteSubmit}
-        ></PopupWithForm>
+        />
 
         <EditAvatarPopup
           onUpdateAvatar={handleUpdateAvatar}
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-        ></EditAvatarPopup>
+        />
       </div>
     </CurrentUserContext.Provider>
   );
