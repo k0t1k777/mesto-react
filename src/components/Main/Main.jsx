@@ -2,12 +2,16 @@ import Card from "../Card/Card";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { useContext } from "react";
 
-export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardDeleteSubmit, onCardLike, cards }) {
-  const currentUser = useContext(CurrentUserContext)
-
-  // const [userName, setUserName] = useState("");
-  // const [userDescription, setUserDescription] = useState("");
-  // const [userAvatar, setUserAvatar] = useState("");
+export default function Main({
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+  onCardClick,
+  onCardDelete,
+  onCardLike,
+  cards,
+}) {
+  const currentUser = useContext(CurrentUserContext);
 
   return (
     <main className="container">
@@ -17,7 +21,11 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
           type="button"
           onClick={onEditAvatar}
         >
-          <img src={currentUser.avatar} className="profile__avatar" alt="Аватарка" />
+          <img
+            src={currentUser.avatar}
+            className="profile__avatar"
+            alt="Аватарка"
+          />
         </button>
         <div className="profile__info">
           <div className="profile__wrapper">
@@ -37,13 +45,18 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
         />
       </section>
       <section className="elements">
-      {cards.map((data) => {
-            return (
-              <Card key={data._id} card={data} onCardLike={onCardLike} onCardClick={onCardClick} onCardDeleteSubmit={onCardDeleteSubmit}></Card>
+        {cards.map((data) => {
+          return (
+            <Card
+              key={data._id}
+              card={data}
+              onCardLike={onCardLike}
+              onCardClick={onCardClick}
+              onCardDelete={onCardDelete}
+            ></Card>
           );
         })}
       </section>
     </main>
   );
 }
-

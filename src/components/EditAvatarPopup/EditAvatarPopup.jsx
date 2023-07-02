@@ -3,7 +3,6 @@ import PopupWithForm from "../PopupWithForm/PopupWithForm";
 
 export default function EditAvatarPopup({ onUpdateAvatar, isOpen, onClose }) {
   const avatar = useRef();
-  
   function handleSubmit(event) {
     event.preventDefault();
     onUpdateAvatar({ avatar: avatar.current.value });

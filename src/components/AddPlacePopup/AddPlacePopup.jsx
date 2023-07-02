@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import PopupWithForm from "../PopupWithForm/PopupWithForm";
 
 export default function AddPlacePopup({ onAddPlace, isOpen, onClose }) {
-  const [name, setName] = useState('')
-  const [link, setLink] = useState('#')
-  
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("#");
+
   useEffect(() => {
     setName("");
     setLink("");
   }, [isOpen]);
-  
+
   function handleSubmit(event) {
     event.preventDefault();
     onAddPlace({
@@ -18,7 +18,6 @@ export default function AddPlacePopup({ onAddPlace, isOpen, onClose }) {
     });
   }
 
-  
   return (
     <PopupWithForm
       name="popupAddPicture"

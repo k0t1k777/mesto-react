@@ -149,7 +149,7 @@ function App() {
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          onAddPlace ={handleAddPlaceSubmit}
+          onAddPlace={handleAddPlaceSubmit}
         ></AddPlacePopup>
 
         <PopupWithForm
@@ -158,7 +158,7 @@ function App() {
           nameOfButton="Да"
           isOpen={isDeletePopup}
           onClose={closeAllPopups}
-          onCardDeleteSubmit={handleCardDeleteSubmit}
+          onSubmit={handleCardDeleteSubmit}
         ></PopupWithForm>
 
         <EditAvatarPopup
