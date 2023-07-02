@@ -12,6 +12,7 @@ export default function Card({ card, onCardClick, onCardDelete, onCardLike }) {
   function handleLikeClick() {
     onCardLike(card);
   }
+
   return (
     <div className="elements__element">
       {currentUser._id === card.owner._id && (

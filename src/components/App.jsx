@@ -1,6 +1,5 @@
 import Header from "./Header/Header.jsx";
 import Main from "./Main/Main.jsx";
-import PopupWithForm from "./PopupWithForm/PopupWithForm.jsx";
 import ImagePopup from "./ImagePopup/ImagePopup.jsx";
 import Footer from "./Footer/Footer.jsx";
 import api from "../utils/api.js";
@@ -9,6 +8,7 @@ import CurrentUserContext from "../contexts/CurrentUserContext.js";
 import EditProfilePopup from "./EditProfilePopup/EditProfilePopup.jsx";
 import EditAvatarPopup from "./EditAvatarPopup/EditAvatarPopup.jsx";
 import AddPlacePopup from "./AddPlacePopup/AddPlacePopup.jsx";
+import ConfirmPopup from "./ConfirmPopup/ConfirmPopup.jsx";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -52,16 +52,11 @@ function App() {
     setDeleteCardID(cardId);
   }
 
-  function handleCardDeleteSubmit(event) {
-    event.preventDefault();
+  function handleCardDeleteSubmit(cardId) {
     api
-      .removeCard(deleteCardID)
+      .removeCard(cardId)
       .then(() => {
-        setCards(
-          cards.filter((item) => {
-            return item._id !== deleteCardID;
-          })
-        );
+        setCards((state) => state.filter((item) => item._id !== cardId));
         closeAllPopups();
       })
       .catch((error) => console.error(`Ошибка ${error}`));
@@ -152,13 +147,11 @@ function App() {
           onAddPlace={handleAddPlaceSubmit}
         />
 
-        <PopupWithForm
-          name="popupConfirm"
-          title="Вы уверены?"
-          nameOfButton="Да"
+        <ConfirmPopup
           isOpen={isDeletePopupOpen}
           onClose={closeAllPopups}
           onSubmit={handleCardDeleteSubmit}
+          card={deleteCardID}
         />
 
         <EditAvatarPopup
